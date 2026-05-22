@@ -6,7 +6,7 @@ O **EduConnect** é uma plataforma web desenvolvida para conectar estudantes da 
 
 1. Links de Gestão e Governança
 
-*   **Link Público do Trello (Quadro de Tarefas):** [Acesse o Quadro do Trello Aqui]([https://trello.com](https://trello.com/b/Y6ctqSr5/projeto-3e-solucoes)) 
+*   **Link Público do Trello (Quadro de Tarefas):** [Acesse o Quadro do Trello Aqui](https://trello.com/b/Y6ctqSr5/projeto-3e-solucoes) 
 *   **Ambiente de Produção (URL Pública):** [Acesse o Sistema EduConnect](https://onrender.com) 
 
 ---
