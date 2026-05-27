@@ -3,20 +3,29 @@ include 'conexao.php';
 $msg = ''; $tipo_msg = '';
 
 if (isset($_POST['registrar_mentoria'])) {
-    $aluno_id = $_POST['aluno_id']; $mentor = trim($_POST['mentor']); $data_m = $_POST['data_mentoria']; $modalidade = $_POST['modalidade']; $link_local = trim($_POST['link_local']); $resumo = trim($_POST['resumo']);
+    $aluno_id = $_POST['aluno_id']; 
+    $mentor = trim($_POST['mentor']); 
+    $data_m = $_POST['data_mentoria']; 
+    $modalidade = $_POST['modalidade']; 
+    $link_local = trim($_POST['link_local']); 
+    $resumo = trim($_POST['resumo']);
+    
     if (!empty($aluno_id) && !empty($mentor) && !empty($data_m) && !empty($modalidade) && !empty($resumo)) {
         try {
-            $stmt = $pdo->prepare("INSERT INTO mentorias (aluno_id, mentor, data_mentoria, modalidade, link_local, resignation ou resumo) VALUES (?, ?, ?, ?, ?, ?)");
-     $stmt = $pdo->prepare("INSERT INTO mentorias (aluno_id, mentor, data_mentoria, modalidade, link_local, resumo) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO mentorias (aluno_id, mentor, data_mentoria, modalidade, link_local, resumo) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$aluno_id, $mentor, $data_m, $modalidade, $link_local, $resumo]);
             $msg = "Mentoria lançada com sucesso!"; $tipo_msg = "sucesso";
-        } catch (Exception $e) { $msg = "Erro ao salvar atendimento."; $tipo_msg = "erro"; }
+        } catch (Exception $e) { 
+            $msg = "Erro ao salvar atendimento."; $tipo_msg = "erro"; 
+        }
     }
 }
-/* Exclusão de mentoria */
+
 if (isset($_GET['excluir'])) {
     $stmt = $pdo->prepare("DELETE FROM mentorias WHERE id = ?");
     $stmt->execute([$_GET['excluir']]);
-    header("Location: mentorias.php"); exit;
+    header("Location: mentorias.php"); 
+    exit;
 }
 
 $alunos = $pdo->query("SELECT id, nome FROM alunos ORDER BY nome ASC")->fetchAll(PDO::FETCH_ASSOC);
@@ -45,7 +54,7 @@ $mentorias = $pdo->query("SELECT m.*, a.nome as aluno_nome FROM mentorias m JOIN
     <div class="container" style="padding-top: 40px;">
         <?php if ($msg): ?><div class="alerta alerta-<?= $tipo_msg ?>" id="notificacao"><?= $msg ?></div><?php endif; ?>
 
-        <div class="track-card" style="flex-direction: column; align-items: stretch; margin-bottom: 30px;">
+        <div class="track-card" style="margin-bottom: 30px; display: block;">
             <h3 style="font-family: var(--fonte-titulo); margin-bottom: 20px; color: #fff;">Registrar Encontro</h3>
             <form method="POST" action="mentorias.php">
                 <div class="grupo-form">
@@ -70,12 +79,15 @@ $mentorias = $pdo->query("SELECT m.*, a.nome as aluno_nome FROM mentorias m JOIN
             </form>
         </div>
 
-        <div class="track-card" style="flex-direction: column; align-items: stretch;">
+        <div class="track-card" style="display: block;">
             <h3 style="font-family: var(--fonte-titulo); margin-bottom: 20px; color: #fff;">Histórico de Encontros</h3>
             <div style="overflow-x: auto;">
                 <table class="tabela-custom">
                     <thead><tr><th>Aluno</th><th>Mentor</th><th>Data</th><th>Modalidade (Local)</th><th>Resumo</th><th>Ações</th></tr></thead>
                     <tbody>
+                        <?php if (count($mentorias) == 0): ?>
+                            <tr><td colspan="6" style="text-align: center; color: var(--texto-apagado);">Nenhum encontro marcado até o momento.</td></tr>
+                        <?php endif; ?>
                         <?php foreach ($mentorias as $m): ?>
                         <tr>
                             <td><strong><?= htmlspecialchars($m['aluno_nome']) ?></strong></td>
@@ -91,5 +103,9 @@ $mentorias = $pdo->query("SELECT m.*, a.nome as aluno_nome FROM mentorias m JOIN
             </div>
         </div>
     </div>
+    <script>
+        const alerta = document.getElementById('notificacao');
+        if (alerta) { setTimeout(() => { alerta.style.display = 'none'; }, 4000); }
+    </script>
 </body>
 </html>
