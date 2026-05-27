@@ -1,1 +1,1 @@
-web: heroku-php-apache2
+web: vendor/bin/herokusish-apache2
