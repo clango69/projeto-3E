@@ -25,9 +25,14 @@
             <a href="home.php" class="brand-logo">Edu<span>.</span>connect</a>
             <nav class="action-nav">
                 <a href="home.php" class="nav-item active"><i class="ph ph-squares-four"></i> Início</a>
-                <a href="alunos.php" class="nav-item"><i class="ph ph-user-list"></i> Alunos</a>
-                <a href="mentorias.php" class="nav-item"><i class="ph ph-lightning"></i> Mentorias</a>
-                <?php if (isset($_SESSION['logado'])): ?><a href="logout.php" class="nav-item" style="color: #ef4444;"><i class="ph ph-sign-out"></i> Sair</a><?php endif; ?>
+                <a href="grade-mentorias.php" class="nav-item"><i class="ph ph-calendar"></i> Mural de Encontros</a>
+                <a href="alunos.php" class="nav-item"><i class="ph ph-user-list"></i> Restrito Alunos</a>
+                <a href="mentorias.php" class="nav-item"><i class="ph ph-lightning"></i> Restrito Mentorias</a>
+                <?php if (isset($_SESSION['logado'])): ?>
+                    <a href="logout.php" class="nav-item" style="color: #ef4444;"><i class="ph ph-sign-out"></i> Sair</a>
+                <?php else: ?>
+                    <a href="login.php" class="nav-item" style="color: var(--neon-verde); font-weight: 700;"><i class="ph ph-sign-in"></i> Entrar</a>
+                <?php endif; ?>
             </nav>
         </div>
     </header>
@@ -36,7 +41,9 @@
             <div class="status-tag"><span class="pulse-dot"></span> Teste Operacional MVP</div>
             <h2>Conectando quem quer <span>aprender</span> com quem quer <span>ensinar</span>.</h2>
             <p>Plataforma inteligente de reforço escolar focada em transformar o desempenho de estudantes da rede pública através do voluntariado.</p>
-            <div class="cta-group"><a href="alunos.php" class="btn-glow">Entrar no Painel <i class="ph ph-arrow-up-right"></i></a></div>
+            <div class="cta-group">
+                <a href="grade-mentorias.php" class="btn-glow">Ver Mural de Encontros <i class="ph ph-arrow-up-right"></i></a>
+            </div>
             <div class="dashboard-preview">
                 <div class="stat-box"><span class="num">100%</span><span class="label">Gratuito</span></div>
                 <div class="stat-box"><span class="num">Rede</span><span class="label">Pública</span></div>
