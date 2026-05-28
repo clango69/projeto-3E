@@ -37,7 +37,7 @@ $mentorias = $pdo->query("SELECT m.*, a.nome as aluno_nome FROM mentorias m JOIN
     <div class="container" style="padding-top: 40px;">
         <div class="track-card" style="display: block;">
             <h2 style="font-family: var(--fonte-titulo); margin-bottom: 10px; color: #fff;">Mural Público de Mentorias Realizadas</h2>
-            <p style="color: var(--texto-apagado); margin-bottom: 25px; font-size: 14px;">Espaço de transparência exibindo todas as atividades e reforços escolares concluídos por nossos voluntários.</p>
+           
             <div style="overflow-x: auto;">
                 <table class="tabela-custom">
                     <thead><tr><th>Estudante Beneficiado</th><th>Mentor Voluntário</th><th>Data do Encontro</th><th>Formato</th><th>Conteúdo Trabalhado</th></tr></thead>
