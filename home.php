@@ -9,12 +9,28 @@
     <script src="https://unpkg.com"></script>
     <link rel="stylesheet" href="estilo.css">
     <style>
-        @media (max-width: 600px) {
-            .header-content { flex-direction: column; text-align: center; }
-            .action-nav { flex-wrap: wrap; justify-content: center; margin-top: 10px; }
-            .nav-item { padding: 8px 12px; font-size: 13px; }
-            .dashboard-preview { flex-direction: column; gap: 15px; text-align: center; }
-            .hero-block h2 { font-size: 32px; }
+        /* ---- Ajustes Finos de Responsividade para Celular ---- */
+        @media (max-width: 768px) {
+            .glass-header { padding: 15px 0; }
+            .header-content { flex-direction: column; text-align: center; gap: 15px; }
+            .action-nav { flex-wrap: wrap; justify-content: center; gap: 4px; padding: 6px; }
+            .nav-item { padding: 8px 14px; font-size: 13px; }
+            
+            .portal-layout { grid-template-columns: 1fr; gap: 40px; padding: 30px 0; }
+            
+            .hero-block { text-align: center; }
+            .hero-block h2 { font-size: 32px; line-height: 1.2; letter-spacing: -1px; }
+            .hero-block p { font-size: 14px; margin: 0 auto 25px auto; }
+            .btn-glow { width: 100%; justify-content: center; padding: 14px 24px; }
+            
+            .dashboard-preview { flex-direction: column; gap: 15px; text-align: center; margin-top: 35px; padding-top: 25px; }
+            .stat-box { background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px; border: 1px solid var(--borda-vidro); }
+            
+            .section-title { text-align: center; margin-bottom: 15px; }
+            .track-card { padding: 18px; gap: 15px; }
+            .track-icon { width: 44px; height: 44px; font-size: 18px; }
+            .track-info h4 { font-size: 16px; }
+            .track-info p { font-size: 12.5px; }
         }
     </style>
 </head>
