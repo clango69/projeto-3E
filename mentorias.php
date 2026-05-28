@@ -28,7 +28,7 @@ $mentorias = $pdo->query("SELECT m.*, a.nome as aluno_nome FROM mentorias m JOIN
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>EduConnect - Mentorias</title>
+    <title>EduConnect - Lançamento de Mentorias</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://googleapis.com"><link rel="preconnect" href="https://gstatic.com" crossorigin><link href="https://googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com"></script>
@@ -47,8 +47,9 @@ $mentorias = $pdo->query("SELECT m.*, a.nome as aluno_nome FROM mentorias m JOIN
             <a href="home.php" class="brand-logo">Edu<span>.</span>connect</a>
             <nav class="action-nav">
                 <a href="home.php" class="nav-item"><i class="ph ph-squares-four"></i> Início</a>
-                <a href="alunos.php" class="nav-item"><i class="ph ph-user-list"></i> Alunos</a>
-                <a href="mentorias.php" class="nav-item active"><i class="ph ph-lightning"></i> Mentorias</a>
+                <a href="grade-mentorias.php" class="nav-item"><i class="ph ph-calendar"></i> Mural de Encontros</a>
+                <a href="alunos.php" class="nav-item"><i class="ph ph-user-list"></i> Restrito Alunos</a>
+                <a href="mentorias.php" class="nav-item active"><i class="ph ph-lightning"></i> Restrito Mentorias</a>
                 <a href="logout.php" class="nav-item" style="color: #ef4444;"><i class="ph ph-sign-out"></i> Sair</a>
             </nav>
         </div>
@@ -57,7 +58,7 @@ $mentorias = $pdo->query("SELECT m.*, a.nome as aluno_nome FROM mentorias m JOIN
         <?php if ($msg): ?><div class="alerta alerta-<?= $tipo_msg ?>" id="notificacao"><?= $msg ?></div><?php endif; ?>
 
         <div class="track-card" style="margin-bottom: 30px; display: block;">
-            <h3 style="font-family: var(--fonte-titulo); margin-bottom: 20px; color: #fff;">Registrar Encontro</h3>
+            <h3 style="font-family: var(--fonte-titulo); margin-bottom: 20px; color: #fff;">Registrar Encontro (Painel Master)</h3>
             <form method="POST" action="mentorias.php">
                 <div class="grupo-form">
                     <label>Aluno</label>
@@ -77,19 +78,16 @@ $mentorias = $pdo->query("SELECT m.*, a.nome as aluno_nome FROM mentorias m JOIN
                 </div>
                 <div class="grupo-form"><label>Local ou Link da Sala</label><input type="text" name="link_local" placeholder="Ex: Sala 4 ou Link do Zoom" required></div>
                 <div class="grupo-form"><label>Resumo do Encontro</label><textarea name="resumo" rows="3" required></textarea></div>
-                <button type="submit" name="registrar_mentoria" class="btn-glow" style="padding: 12px 24px; border-radius:6px; cursor: pointer;">Gravar Sessão</button>
+                <button type="submit" name="registrar_mentoria" class="btn-glow" style="padding: 12px 24px; border-radius:6px;">Gravar Sessão</button>
             </form>
         </div>
 
         <div class="track-card" style="display: block;">
-            <h3 style="font-family: var(--fonte-titulo); margin-bottom: 20px; color: #fff;">Histórico de Encontros</h3>
+            <h3 style="font-family: var(--fonte-titulo); margin-bottom: 20px; color: #fff;">Histórico de Encontros (Modo Edição)</h3>
             <div style="overflow-x: auto;">
                 <table class="tabela-custom">
-                    <thead><tr><th>Aluno</th><th>Mentor</th><th>Data</th><th>Modalidade (Local)</th><th>Resumo</th><th>Ações</th></tr></thead>
+                    <thead><tr><th>Aluno</th><th>Mentor</th><th>Data</th><th>Modalidade</th><th>Resumo</th><th>Ações</th></tr></thead>
                     <tbody>
-                        <?php if (count($mentorias) == 0): ?>
-                            <tr><td colspan="6" style="text-align: center; color: var(--texto-apagado);">Nenhum encontro marcado até o momento.</td></tr>
-                        <?php endif; ?>
                         <?php foreach ($mentorias as $m): ?>
                         <tr>
                             <td><strong><?= htmlspecialchars($m['aluno_nome']) ?></strong></td>
