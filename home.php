@@ -84,5 +84,58 @@
             </div>
         </section>
     </main>
+    <!-- Sistema de Alertas Dinâmicos (Login/Logout) -->
+<script>
+    // Função para criar o balão de alerta na tela via JavaScript puro
+    function mostrarAviso(mensagem, tipo) {
+        // Cria o elemento na tela
+        const alerta = document.createElement('div');
+        alerta.className = 'alerta alerta-sucesso';
+        alerta.style.position = 'fixed';
+        alerta.style.top = '20px';
+        alerta.style.right = '20px';
+        alerta.style.zIndex = '9999';
+        alerta.style.boxShadow = '0 10px 25px rgba(0,0,0,0.5)';
+        alerta.style.animation = 'fadeIn 0.3s ease-in-out';
+        
+        // Aplica a cor com base no tipo de aviso
+        if (tipo === 'logout') {
+            alerta.className = 'alerta alerta-erro';
+            alerta.style.background = 'rgba(239, 68, 68, 0.2)';
+            alerta.style.borderColor = '#ef4444';
+            alerta.style.color = '#fecaca';
+        } else {
+            alerta.style.background = 'rgba(45, 212, 191, 0.2)';
+            alerta.style.borderColor = 'var(--neon-verde)';
+            alerta.style.color = '#ccfbf1';
+        }
+        
+        alerta.innerHTML = `<strong>Notificação:</strong> ${mensagem}`;
+        document.body.appendChild(alerta);
+        
+        // Some automaticamente após 4 segundos
+        setTimeout(() => {
+            alerta.style.opacity = '0';
+            alerta.style.transition = 'opacity 0.4s ease';
+            setTimeout(() => alerta.remove(), 400);
+        }, 4000);
+    }
+
+    // O PHP avisa o JavaScript se houve uma ação recente de login ou logout
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        if (urlParams.get('status') === 'logado') {
+            mostrarAviso('Você entrou na conta administrativa com sucesso!', 'login');
+            // Limpa o link para o aviso não reaparecer se der F5
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+        
+        if (urlParams.get('status') === 'deslogado') {
+            mostrarAviso('Sessão encerrada. Você saiu da conta com segurança.', 'logout');
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+</script>
 </body>
 </html>
