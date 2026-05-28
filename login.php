@@ -2,7 +2,6 @@
 session_start();
 $erro = '';
 
-// Definição do usuário administrador padrão para o MVP
 define('USER_ADMIN', 'admin');
 define('PASS_ADMIN', 'admin123');
 
@@ -31,25 +30,18 @@ if (isset($_POST['logar'])) {
     <link href="https://googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="estilo.css">
     <style>
-        .login-container { display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 100px); }
-        .login-card { width: 100%; max-width: 400px; padding: 40px 30px; }
+        .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .login-card { width: 100%; max-width: 400px; padding: 40px 30px; box-sizing: border-box; }
         .login-logo { text-align: center; font-family: var(--fonte-titulo); font-size: 32px; font-weight: 700; margin-bottom: 30px; color: #fff; }
         .login-logo span { color: var(--neon-verde); }
     </style>
 </head>
 <body class="dark-portal">
-    <div class="glow-bg">
-        <div class="ball cyan"></div>
-    </div>
-
-    <div class="container login-container">
+    <div class="glow-bg"><div class="ball cyan"></div></div>
+    <div class="login-container">
         <div class="track-card login-card" style="display: block;">
             <div class="login-logo">Edu<span>.</span>connect</div>
-            
-            <?php if ($erro): ?>
-                <div class="alerta alerta-erro"><?= $erro ?></div>
-            <?php endif; ?>
-
+            <?php if ($erro): ?><div class="alerta alerta-erro"><?= $erro ?></div><?php endif; ?>
             <form method="POST" action="login.php">
                 <div class="grupo-form">
                     <label>Usuário Administrador</label>
@@ -59,9 +51,7 @@ if (isset($_POST['logar'])) {
                     <label>Senha de Acesso</label>
                     <input type="password" name="senha" placeholder="••••••••" required>
                 </div>
-                <button type="submit" name="logar" class="btn-glow" style="width: 100%; justify-content: center; margin-top: 10px; border-radius: 6px;">
-                    Entrar no Sistema
-                </button>
+                <button type="submit" name="logar" class="btn-glow" style="width: 100%; justify-content: center; margin-top: 10px; border-radius: 6px;">Entrar no Sistema</button>
             </form>
         </div>
     </div>
