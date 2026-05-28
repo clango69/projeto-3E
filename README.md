@@ -1,117 +1,113 @@
-EduConnect — Sistema de Gestão de Mentorias (MVP)
+## LINKS E RECURSOS DO PROJETO
+Os links abaixo dão acesso imediato aos ambientes oficiais de produção e acompanhamento de tarefas deste MVP:
 
-O **EduConnect** é uma plataforma web desenvolvida para conectar estudantes da rede pública de ensino a mentores voluntários para reforço escolar. Este repositório contém o Mínimo Produto Viável (MVP) operacional, focado em gerenciamento de alunos e registro de atendimentos.
+* Acessar o Site Oficial EduConnect https://educonnect-3.up.railway.app/home.php
+* Acessar o Quadro do Trello do Projeto https://trello.com/b/Y6ctqSr5/projeto-3e-solucoes
 
----
+------------------------------
+## MANUAL DE SUPORTE TÉCNICO – SISTEMA EDUCONNECT
+Este documento descreve as etapas necessárias para a replicação local, manutenção e compreensão da infraestrutura de nuvem aplicadas no MVP da plataforma EduConnect.
+------------------------------
+## 1. CONFIGURAÇÃO E EXECUÇÃO LOCAL (PASSO A PASSO)
+O sistema foi desenvolvido utilizando PHP nativo estruturado e banco de dados MySQL, sendo totalmente compatível com pacotes integrados de servidores locais como XAMPP, Laragon ou WampServer baseados em ambiente Windows ou Linux.
+## Pré-requisitos
 
-1. Links de Gestão e Governança
+* Servidor Web Apache.
+* Interpretador PHP na versão 8.2 ou superior.
+* Servidor de Banco de Dados MySQL ou MariaDB.
+* Navegador Web (Chrome, Firefox ou Edge).
 
-*   **Link Público do Trello (Quadro de Tarefas):** [Acesse o Quadro do Trello Aqui](https://trello.com/b/Y6ctqSr5/projeto-3e-solucoes) 
-*   **Ambiente de Produção (URL Pública):** [Acesse o Sistema EduConnect](https://onrender.com) 
+## Etapa 1: Organização dos Arquivos
 
----
+   1. Localize o diretório raiz de publicação do seu servidor local:
+   * No XAMPP: C:\xampp\htdocs\
+      * No Laragon: C:\laragon\www\
+   2. Crie uma pasta chamada educonnect dentro desse diretório.
+   3. Copie todos os arquivos do repositório (home.php, alunos.php, mentorias.php, grade-mentorias.php, conexao.php, login.php, logout.php e estilo.css) para dentro desta pasta criada.
 
-2. Diário de Bordo e Histórico de Engenharia
+## Etapa 2: Inicialização dos Serviços
 
-Este diário registra o fluxo de tomada de decisão técnica e as fases do ciclo de desenvolvimento do MVP:
+   1. Abra o painel de controle do seu servidor local (ex: XAMPP Control Panel).
+   2. Clique no botão de inicialização dos módulos Apache e MySQL.
+   3. Certifique-se de que os status de ambos constam como ativos ou em execução.
 
-### Fase 1: Alinhamento de Escopo e Arquitetura Banco de Dados
-*   **Decisão:** Optou-se por PHP Estruturado nativo com PDO para máxima portabilidade em servidores de nuvem gratuitos.
-*   **Desafio:** Garantir integridade de dados ao deletar alunos.
-*   **Solução:** Implementação de constraint `ON DELETE CASCADE` na chave estrangeira das mentorias.
+## Etapa 3: Instalação do Banco de Dados Local
 
-### Fase 2: Desenvolvimento do Front-End e Segurança
-*   **Decisão:** Interface responsiva em CSS Grid/Flexbox puro, eliminando dependências externas (Bootstrap/Tailwind) para agilizar o carregamento em conexões lentas da rede pública.
-*   **Desafio:** Risco de segurança por dados inseridos por usuários.
-*   **Solução:** Implementação de validações JavaScript no cliente e uso obrigatório de `htmlspecialchars` e `Prepared Statements` no servidor contra ataques XSS e SQL Injection.
+   1. Abra o seu navegador e acesse a ferramenta de gerenciamento através do link: http://localhost/phpmyadmin/
+   2. Clique na aba Banco de Dados e crie um novo banco com o nome exato de educonnect, utilizando a codificação utf8mb4_general_ci.
+   3. Selecione o banco educonnect na lista à esquerda, navegue até a aba SQL, cole o script de estruturação contido na seção 2 deste manual e execute a consulta.
 
-### Fase 3: Homologação e Deploy Continuo
-*   **Decisão:** Utilização de variáveis de ambiente (`getenv`) para desacoplar credenciais locais das credenciais de produção.
-*   **Desafio:** Upload de arquivos de configuração contendo senhas.
-*   **Solução:** Criação de rotinas que buscam strings de conexão injetadas diretamente pelo container Linux (Render/Railway).
+## Etapa 4: Acesso ao Sistema
 
----
+   1. Abra o navegador de internet.
+   2. Insira a URL na barra de endereços: http://localhost/educonnect/home.php
+   3. Para acessar os módulos de gerenciamento restritos (alunos.php e mentorias.php), utilize as credenciais padrão de homologação definidas no código:
+   * Usuário: admin
+      * Senha: admin123
+   
+------------------------------
+## 2. ESTRUTURAÇÃO DO BANCO DE DATOS MYSQL
+O banco de dados foi modelado seguindo a terceira forma normal para garantir consistência e evitar redundância. O relacionamento é do tipo 1 para N (um aluno pode possuir múltiplas mentorias vinculadas, mas uma mentoria pertence a apenas um aluno).
+## Script de Criação das Tabelas
 
-3. Manual de Suporte Técnico (Instalação Local)
-
-Siga o passo a passo abaixo para rodar o projeto do zero em sua máquina local para fins de manutenção ou desenvolvimento.
-
-### Pré-requisitos
-*   Servidor local instalado (**XAMPP**, **WampServer** ou **Laragon** com PHP 8.0+ e MySQL).
-*   **Git** instalado na máquina.
-
-### Passo 1: Clonar o Repositório
-Abra o seu terminal ou prompt de comando na pasta do seu servidor local (ex: `C:/xampp/htdocs/`) e execute:
-```bash
-git clone https://github.com
-cd educonnect
-```
-
-### Passo 2: Configurar o Banco de Dados Local
-1. Abra o painel de controle do XAMPP e inicialize os módulos **Apache** e **MySQL**.
-2. Acesse o painel do **phpMyAdmin** pelo navegador em: `http://localhost/phpmyadmin/`.
-3. Clique em **Novo** no menu lateral esquerdo para criar um novo banco.
-4. Defina o nome exatamente como `educonnect` e clique em **Criar**.
-5. Clique na aba **SQL** no topo da página, cole o script de estrutura contido na seção 4 deste manual e clique em **Executar**.
-
-### Passo 3: Executar a Aplicação
-1. Certifique-se de que a pasta `educonnect` está dentro do diretório raiz do servidor web local.
-2. Acesse no seu navegador a URL: `http://localhost/educonnect/index.php`.
-3. O sistema está pronto para uso e testes locais.
-
----
-
-4. Modelagem e Estrutura do Banco de Dados
-
-O banco de dados foi projetado seguindo as regras de integridade referencial da **3ª Forma Normal (3FN)**. O relacionamento é de **1 para Muitos (1:N)**, onde um aluno pode possuir múltiplas mentorias vinculadas, mas uma mentoria pertence a apenas um aluno.
-
-### Script de Inicialização DDL (Data Definition Language)
-
-```sql
--- Criação do banco de dados com codificação para suportar acentuação em português
-CREATE DATABASE IF NOT EXISTS educonnect
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS educonnect;
 USE educonnect;
-
--- Tabela de Alunos (Entidade Independente)
-CREATE TABLE IF NOT EXISTS alunos (
+CREATE TABLE alunos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE, -- Restrição de e-mail único no sistema
+    email VARCHAR(100) NOT NULL UNIQUE,
     serie VARCHAR(50) NOT NULL,
-    data_nascimento DATE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
-
--- Tabela de Mentorias (Entidade Dependente)
-CREATE TABLE IF NOT EXISTS mentorias (
+    data_nascimento DATE NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE mentorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    aluno_id INT NOT NULL, -- Chave Estrangeira ligada à tabela alunos
+    aluno_id INT NOT NULL,
     mentor VARCHAR(100) NOT NULL,
     data_mentoria DATE NOT NULL,
+    modalidade ENUM('Presencial', 'Online') NOT NULL,
+    link_local VARCHAR(255) NOT NULL,
     resumo TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
-    -- Restrição de Integridade: Se o aluno for excluído, seu histórico de mentorias é apagado automaticamente
-    FOREIGN KEY (aluno_id) 
-        REFERENCES alunos(id) 
-        ON DELETE CASCADE
-) ENGINE=InnoDB;
-```
+    FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-### Dicionário de Dados Resumido
+## Detalhamento Técnico das Tabelas## Tabela: alunos
 
-#### Tabela `alunos`
-*   `id`: Chave primária de auto-incremento.
-*   `nome`: Armazena o nome completo do estudante (Limite: 100 caracteres).
-*   `email`: Campo de texto indexado como único para impedir cadastros duplicados.
-*   `serie`: Armazena o ano letivo selecionado na caixa de listagem.
-*   `data_nascimento`: Campo do tipo `DATE` utilizado para o cálculo em tempo real da idade na interface.
+* id: Chave primária com incremento automático, garantindo um identificador numérico único para cada estudante.
+* nome: Armazena o nome completo do estudante com limite de 100 caracteres.
+* email: Campo de texto restrito com índice único (UNIQUE), impedindo a duplicação de cadastros sob o mesmo endereço eletrônico.
+* serie: Campo de seleção de texto fechado para padronização dos anos escolares atendidos.
+* data_nascimento: Campo do tipo data para registro da idade dos estudantes atendidos.
 
-#### Tabela `mentorias`
-*   `id`: Chave primária de auto-incremento.
-*   `aluno_id`: Chave estrangeira que garante que nenhuma mentoria seja registrada sem um aluno válido existente.
-*   `mentor`: Armazena o nome do voluntário responsável pelo atendimento.
-*   `data_mentoria`: Data em que o encontro de reforço aconteceu.
-*   `resumo`: Tipo `TEXT` para permitir relatórios detalhados sem limite severo de caracteres.
+## Tabela: mentorias
+
+* id: Chave primária autoincrementada da tabela de histórico.
+* aluno_id: Chave estrangeira que aponta diretamente para o id da tabela alunos, estabelecendo a integridade referencial.
+* mentor: Nome do voluntário responsável pela aplicação do reforço escolar.
+* data_mentoria: Data em que a atividade de mentoria foi concluída.
+* modalidade: Campo enumerado restringindo as opções do sistema exclusivamente para os valores Presencial ou Online.
+* link_local: Campo dinâmico que recebe o endereço de salas virtuais ou a identificação física da sala de aula escolar.
+* resumo: Campo do tipo texto longo para o sumário descritivo das matérias revisadas.
+* ON DELETE CASCADE: Regra de restrição configurada para que, caso um aluno seja removido do sistema, todo o histórico de mentorias atrelado a ele seja limpo automaticamente pelo banco, evitando dados órfãos.
+
+------------------------------
+## 3. PASSOS E CONFIGURAÇÕES DA INFRAESTRUTURA EM NUVEM (RAILWAY)
+A publicação do sistema em ambiente Linux de produção foi realizada de forma integrada utilizando a plataforma de nuvem Railway, vinculada a um pipeline de implantação contínua (CI/CD) a partir do GitHub.
+## Configuração do Projeto e Variáveis de Ambiente
+O contêiner Linux do Railway foi provisionado para rodar de forma acoplada, dividindo o espaço em dois serviços internos operando em uma rede isolada.
+
+   1. Provisionamento do Banco de Dados: Foi adicionada uma instância isolada do plugin oficial do MySQL dentro do projeto do Railway, gerando credenciais automáticas de comunicação interna criptografada.
+   2. Declaração de Variáveis de Ambiente: No serviço principal da aplicação web, foram injetadas variáveis dinâmicas de ambiente referenciadas para que o PHP obtenha as credenciais do banco sem expor senhas diretamente no código fonte. As variáveis configuradas foram:
+   * MYSQLHOST apontando para a URL interna do servidor de banco.
+      * MYSQLPORT definindo a porta padrão de escuta do banco.
+      * MYSQLDATABASE definindo o nome lógico da base de dados.
+      * MYSQLUSER definindo o usuário de administração em nuvem.
+      * MYSQLPASSWORD injetando a chave de acesso criptografada do banco.
+   3. Instalação de Módulos PHP: Para o ambiente Linux reconhecer comandos de banco de dados nativos, foram ativadas variáveis globais de compilação instruindo a engine Nixpacks do Railway a compilar os drivers necessários:
+   * NIXPACKS_PHP_EXTENSIONS configurada com o valor pdo,pdo_mysql.
+      * NIXPACKS_PHP_VERSION travada rigidamente na versão 8.2.
+   
+## Rotas de Deploy e Redirecionamento de Rede
+
+* O Railway monitora o repositório do GitHub em tempo real. A cada nova atualização na ramificação principal (main), o servidor Linux reconstrói o ambiente em segundos.
+* O arquivo inicializador padrão index.php foi adicionado na raiz do servidor para interceptar requisições HTTP da porta principal do domínio e realizar um redirecionamento dinâmico via cabeçalho para a página pública oficial do portal (home.php).
+* O domínio público foi gerado nas propriedades de rede da aba Settings do Railway na modalidade TLS/SSL activa de forma nativa, convertendo todas as requisições HTTP do cliente para conexões seguras HTTPS.
