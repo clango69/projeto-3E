@@ -12,7 +12,7 @@ if (isset($_POST['logar'])) {
     if ($usuario === USER_ADMIN && $senha === PASS_ADMIN) {
         $_SESSION['logado'] = true;
         $_SESSION['usuario'] = $usuario;
-        header("Location: home.php");
+     header("Location: home.php?status=logado");
         exit;
     } else {
         $erro = "Usuário ou senha incorretos.";
