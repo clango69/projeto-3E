@@ -39,7 +39,7 @@ if (isset($_GET['editar'])) {
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>EduConnect - Alunos</title>
+    <title>EduConnect - Administração de Alunos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://googleapis.com"><link rel="preconnect" href="https://gstatic.com" crossorigin><link href="https://googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com"></script>
@@ -58,8 +58,9 @@ if (isset($_GET['editar'])) {
             <a href="home.php" class="brand-logo">Edu<span>.</span>connect</a>
             <nav class="action-nav">
                 <a href="home.php" class="nav-item"><i class="ph ph-squares-four"></i> Início</a>
-                <a href="alunos.php" class="nav-item active"><i class="ph ph-user-list"></i> Alunos</a>
-                <a href="mentorias.php" class="nav-item"><i class="ph ph-lightning"></i> Mentorias</a>
+                <a href="grade-mentorias.php" class="nav-item"><i class="ph ph-calendar"></i> Mural de Encontros</a>
+                <a href="alunos.php" class="nav-item active"><i class="ph ph-user-list"></i> Restrito Alunos</a>
+                <a href="mentorias.php" class="nav-item"><i class="ph ph-lightning"></i> Restrito Mentorias</a>
                 <a href="logout.php" class="nav-item" style="color: #ef4444;"><i class="ph ph-sign-out"></i> Sair</a>
             </nav>
         </div>
@@ -67,7 +68,7 @@ if (isset($_GET['editar'])) {
     <div class="container" style="padding-top: 30px;">
         <?php if ($msg): ?><div class="alerta alerta-<?= $tipo_msg ?>" id="notificacao"><?= $msg ?></div><?php endif; ?>
         
-        <div class="track-card" style="flex-direction: column; align-items: stretch; margin-bottom: 30px; display: block;">
+        <div class="track-card" style="margin-bottom: 30px; display: block;">
             <h3 style="font-family: var(--fonte-titulo); margin-bottom: 20px; color: #fff;"><?= $aluno_edicao ? 'Modificar Dados do Aluno' : 'Cadastrar Novo Aluno' ?></h3>
             <form method="POST" action="alunos.php">
                 <input type="hidden" name="id" value="<?= $aluno_edicao['id'] ?? '' ?>">
@@ -87,11 +88,11 @@ if (isset($_GET['editar'])) {
                     </select>
                 </div>
                 <div class="grupo-form"><label>Data de Nascimento</label><input type="date" name="data_nascimento" value="<?= $aluno_edicao['data_nascimento'] ?? '' ?>" required></div>
-                <button type="submit" name="salvar_aluno" class="btn-glow" style="padding: 12px 24px; border-radius:6px; cursor: pointer;">Salvar Registro</button>
+                <button type="submit" name="salvar_aluno" class="btn-glow" style="padding: 12px 24px; border-radius:6px;">Salvar Registro</button>
             </form>
         </div>
 
-        <div class="track-card" style="flex-direction: column; align-items: stretch; display: block;">
+        <div class="track-card" style="display: block;">
             <h3 style="font-family: var(--fonte-titulo); margin-bottom: 20px; color: #fff;">Lista de Estudantes</h3>
             <div style="overflow-x: auto;">
                 <table class="tabela-custom">
